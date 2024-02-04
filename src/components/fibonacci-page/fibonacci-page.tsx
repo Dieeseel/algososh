@@ -43,7 +43,9 @@ export const FibonacciPage: React.FC = () => {
                  max={19} 
                  isLimitText={true} 
                  placeholder="Введите число" 
-                 onChange={onChange} required
+                 onChange={onChange} 
+                 value={inputValue}
+                 required
           />
           <Button text="Рассчитать" 
                   type="submit" 

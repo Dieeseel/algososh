@@ -4,7 +4,7 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
-import { LinkedList } from "../../utils/utils";
+import { LinkedList } from "../../utils/list";
 import { TLetter } from "../../types";
 import { ElementStates } from "../../types/element-states";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
@@ -290,14 +290,14 @@ export const ListPage: React.FC = () => {
                       onClick={() => addItemByIndex()}
                       isLoader={actionType === 'addByIndex' ? true : false}
                       disabled={inputValueIndex !== null && inputValueText.length > 0 
-                      && inputValueIndex <= list.getSize() ? false : true}
+                      && inputValueIndex <= list.getSize() && inputValueIndex >= 0 ? false : true}
               />
               <Button text='Удалить по индексу' 
                       extraClass={styles.button}
                       onClick={() => deleteItemByIndex()}
                       isLoader={actionType === 'deleteByIndex' ? true : false}
                       disabled={inputValueIndex !== null 
-                      && inputValueIndex <= list.getSize() - 1 ? false : true} 
+                      && inputValueIndex <= list.getSize() - 1 && inputValueIndex >= 0 ? false : true} 
               />
             </div>
           </form>
