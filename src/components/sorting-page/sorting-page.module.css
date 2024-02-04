@@ -1,0 +1,40 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+}
+
+.sortType {
+    display: flex;
+    gap: 40px;
+    margin-right: 52px;
+}
+
+.sortView {
+    display: flex;
+    gap: 12px;
+    margin-right: 80px;
+}
+
+.output {
+    margin-top: 48px;
+    display: flex;
+    align-items: flex-end;
+    gap: 78px 16px ;
+    list-style: none;
+    padding: 0;
+    min-height: 342px;
+}
+
+.buttonAsc {
+    min-width: 205px;
+}
+
+.buttonDesc {
+    min-width: 186px;
+}
