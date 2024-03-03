@@ -11,15 +11,16 @@ export const Input: React.FC<InputProps> = ({
   placeholder = "Введите текст",
   extraClass = "",
   type = "text",
-  maxLength,
+  maxLength = 0,
   max,
   isLimitText = false,
   ...rest
 }) => {
   const limitText =
-    type === "text"
-      ? `Максимум — ${maxLength} символа`
-      : `Максимальное число — ${max}`;
+    type !== "text"
+      ? `Максимальное число — ${max}`
+        : maxLength > 4 ? `Максимум — ${maxLength} символов`
+        : `Максимум — ${maxLength} символа`;
 
   return (
     <div className={`${styles.content} ${extraClass}`}>

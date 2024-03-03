@@ -1,0 +1,62 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.fieldContainer {
+    max-width: 952px;
+    display: flex;
+    gap: 12px;
+}
+
+.input {
+    min-width: 204px;
+    max-width: 204px;
+}
+
+.button {
+    width: 100%;
+    min-width: 175px;
+    max-width: 362px;
+}
+
+.output {
+    margin: 120px 0 0 0;
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+}
+
+.listItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+}
+
+.circleItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.smallCircleTop {
+    top: -64px;
+    min-width: 80px;
+    position: absolute;
+}
+
+.smallCircleBottom {
+    bottom: -94px;
+    min-width: 80px;
+    position: absolute;
+}

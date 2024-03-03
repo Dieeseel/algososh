@@ -1,0 +1,23 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    width: 829px;
+    gap: 12px;
+}
+
+.input {
+    min-width: 377px;
+}
+
+.output {
+    margin-top: 120px;
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+}
