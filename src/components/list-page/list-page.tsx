@@ -55,8 +55,9 @@ export const ListPage: React.FC = () => {
   const generateRandomList = (list: LinkedList<string>): void => {
     const characters = '0123456789';
     const maxElements = 6;
-  
-    for (let i = 0; i < Math.ceil(Math.random() * maxElements); i++) {
+    const minElements = 2
+
+    for (let i = 0; i < Math.ceil(Math.random() * (maxElements - minElements) + minElements); i++) {
       const randomValue = Array.from({ length: 3 }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
       list.append(randomValue);
     }
@@ -218,7 +219,7 @@ export const ListPage: React.FC = () => {
         setRemovingIndexElement(i)
         updateArray[i].state = ElementStates.Changing
         setListArray([...updateArray])
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise(resolve => setTimeout(resolve, 600))
 
       }
       updateArray[index].letter = undefined
@@ -250,9 +251,11 @@ export const ListPage: React.FC = () => {
           <form className={styles.form}>
             <div className={styles.fieldContainer}>
               <Input extraClass={styles.input} 
-                     isLimitText={true} maxLength={4} 
+                     isLimitText={true} 
+                     maxLength={4} 
                      type="text" onChange={onChange} 
                      value={inputValueText}
+                     id='add'
               />
               <Button text='Добавить в head' 
                       extraClass={styles.button} 
@@ -283,8 +286,10 @@ export const ListPage: React.FC = () => {
               <Input extraClass={styles.input} 
                      type="number" 
                      onChange={onChange} 
+                     maxLength={4}
                      max={list.getSize() - 1} 
                      value={inputValueIndex === null ? '' : String(inputValueIndex)}
+                     id='addByIndex'
               />
               <Button text='Добавить по индексу' extraClass={styles.button}
                       onClick={() => addItemByIndex()}

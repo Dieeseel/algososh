@@ -1,12 +1,13 @@
-import React, { useState, useCallback, ChangeEvent, useEffect } from "react";
 import styles from './string.module.css'
+import { useState, useCallback, ChangeEvent } from "react";
+import { reverseText } from "../../utils/utils";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
-import { swap } from "../../utils/utils";
 import { TLetter } from "../../types";
+
 
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState('')
@@ -20,37 +21,20 @@ export const StringComponent: React.FC = () => {
   const submitText = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      
       const letters = inputValue.split('').map((letter) => {
         return {
           letter: letter,
           state: ElementStates.Default
         }
       })
+
       setLoading(true)
       setLettersValue(letters);
-      reverseText(letters)
+      reverseText(letters, setLettersValue, setLoading)
     }, [inputValue]
   );
   
-  const reverseText = async (text: TLetter[]) => {
-    const arr = text;
-    let start = 0
-    let end = arr.length - 1;
-    
-    for (start; start <= end; start++, end--) {
-      arr[start].state = ElementStates.Changing
-      arr[end].state = ElementStates.Changing
-      setLettersValue([...arr])
-
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      swap(arr, start, end);
-      arr[start].state = ElementStates.Modified
-      arr[end].state = ElementStates.Modified
-      setLettersValue([...arr])
-    } 
-    setLoading(false)
-  };
-
 
   return (
     <SolutionLayout title="Строка">
@@ -68,7 +52,7 @@ export const StringComponent: React.FC = () => {
         <ul className={styles.output}>
           {
             lettersValue.map((item, index) => {
-              return <li key={index}><Circle letter={item.letter} state={item.state}/></li>
+              return <li key={index}><Circle letter={item.letter} state={item.state} /></li>
             })
           }
         </ul>
