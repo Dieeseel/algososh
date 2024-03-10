@@ -40,7 +40,8 @@ export const FibonacciPage: React.FC = () => {
      <div className={styles.main}>
         <form className={styles.form} onSubmit={submitNumber}>
           <Input type="number" 
-                 max={19} 
+                 max={19}
+                 maxLength={2} 
                  isLimitText={true} 
                  placeholder="Введите число" 
                  onChange={onChange} 

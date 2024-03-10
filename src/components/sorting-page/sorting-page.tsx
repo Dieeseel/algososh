@@ -5,9 +5,15 @@ import { Button } from "../ui/button/button";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
-import { swap } from "../../utils/utils";
 import { ElementStates } from "../../types/element-states";
 import { TColumn } from "../../types";
+import { 
+  selectionSortDesc, 
+  selectionSortAsc, 
+  bubbleSortAsc, 
+  bubbleSortDesc 
+} from "../../utils/utils";
+
 
 export const SortingPage: React.FC = () => {
   const [array, setArray] = useState<TColumn[]>([])
@@ -42,136 +48,22 @@ export const SortingPage: React.FC = () => {
     if (selectedTypeSort === 'selection') {
       if (sortDirection === Direction.Ascending) { 
         setLoadingAscSort(true)
-        selectionSortAsc(array)
+        selectionSortAsc(array, setArray, setLoadingAscSort)
       } else {
         setLoadingDescSort(true)
-        selectionSortDesc(array)
+        selectionSortDesc(array, setArray, setLoadingDescSort)
       }
     } else {
       if (sortDirection === Direction.Ascending) { 
         setLoadingAscSort(true)
-        bubbleSortAsc(array)
+        bubbleSortAsc(array, setArray, setLoadingAscSort)
       } else {
         setLoadingDescSort(true)
-        bubbleSortDesc(array)
+        bubbleSortDesc(array, setArray, setLoadingDescSort)
       }
     }
   }
 
-  const selectionSortDesc = async (arr: TColumn[]) => {
-    const array = [...arr]
-
-    for (let i = 0; i < array.length; i++) {
-      let maxIndex = i;
-      array[i].state = ElementStates.Changing
-      setArray([...array])
-
-      for (let j = i + 1; j < array.length; j++) {
-        array[j].state = ElementStates.Changing
-        setArray([...array])
-
-        await new Promise(resolve => setTimeout(resolve, 400));
-        if (array[j]?.number > array[maxIndex]?.number) {
-          maxIndex = j;
-        }
-        array[j].state = ElementStates.Default
-        setArray([...array])
-      }
-
-      if (maxIndex !== i) {
-        swap(array, i, maxIndex)
-        array[maxIndex].state = ElementStates.Default
-      } 
-      else {
-        array[maxIndex].state = ElementStates.Modified
-      }
-
-      array[maxIndex].state = ElementStates.Default
-      array[i].state = ElementStates.Modified
-      setArray([...array])
-    }
-    setLoadingDescSort(false)
-  }
-
-
-  const selectionSortAsc = async (arr: TColumn[]) => {
-    const array = [...arr]
-
-    for (let i = 0; i < array.length; i++) {
-      let minIndex = i;
-      array[i].state = ElementStates.Changing
-      setArray([...array])
-
-      for (let j = i + 1; j < array.length; j++) {
-        array[j].state = ElementStates.Changing
-        setArray([...array])
-
-        await new Promise(resolve => setTimeout(resolve, 400));
-        if (array[j]?.number < array[minIndex]?.number) {
-          minIndex = j;
-        }
-        array[j].state = ElementStates.Default
-        setArray([...array])
-      }
-
-      if (minIndex !== i) {
-        swap(array, i, minIndex)
-        array[minIndex].state = ElementStates.Default
-      }
-      else {
-        array[minIndex].state = ElementStates.Modified
-      }
-
-      array[minIndex].state = ElementStates.Default
-      array[i].state = ElementStates.Modified
-      setArray([...array])
-    }
-    setLoadingAscSort(false)
-  };
-
-  const bubbleSortAsc = async (arr: TColumn[]) => {
-    const array = [...arr]
-
-    for (let i = 0; i < array.length; i++) {
-      for (let j = 0; j < array.length  - 1 - i; j++) {
-        array[j].state = ElementStates.Changing
-        array[j + 1].state = ElementStates.Changing
-        setArray([...array])
-
-        await new Promise(resolve => setTimeout(resolve, 400));
-        if (array[j]?.number > array[j + 1]?.number) {
-          swap(array, j, j + 1)
-        }
-        array[j].state = ElementStates.Default;
-        setArray([...array])
-      }
-      array[array.length- i - 1].state = ElementStates.Modified;
-    }
-    setArray([...array])
-    setLoadingAscSort(false)
-  }
-
-  const bubbleSortDesc = async (arr: TColumn[]) => {
-    const array = [...arr]
-
-    for (let i = 0; i < array.length; i++) {
-      for (let j = 0; j < array.length  - 1 - i; j++) {
-        array[j].state = ElementStates.Changing
-        array[j + 1].state = ElementStates.Changing
-        setArray([...array])
-
-        await new Promise(resolve => setTimeout(resolve, 400));
-        if (array[j]?.number < array[j + 1]?.number) {
-          swap(array, j, j + 1)
-        }
-        array[j].state = ElementStates.Default;
-        setArray([...array])
-      }
-      array[array.length- i - 1].state = ElementStates.Modified;
-    }
-    setArray([...array])
-    setLoadingDescSort(false)
-  }
 
   return (
     <SolutionLayout title="Сортировка массива">
